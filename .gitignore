@@ -1,0 +1,16 @@
+# Local environment variables and credentials
+.env
+.env.*
+!.env.example
+
+# Installed dependencies and generated output
+**/node_modules/
+**/dist/
+**/dist-ssr/
+
+# Private keys and local credential files
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="440" viewBox="0 0 400 440" role="img" aria-labelledby="title description">
+  <title id="title">Matchbox Pack illustrated pack</title>
+  <desc id="description">Original vector product-pack illustration for Matchbox Pack. Add a real product photo beside this SVG as matchbox-pack.jpg or matchbox-pack.png to use it instead.</desc>
+  <defs>
+    <linearGradient id="pack" x1="0" x2="1" y1="0" y2="1"><stop stop-color="hsl(286 76% 46%)"/><stop offset="1" stop-color="hsl(308 70% 29%)"/></linearGradient>
+    <linearGradient id="shine" x1="0" x2="1"><stop stop-color="#fff" stop-opacity=".24"/><stop offset=".45" stop-color="#fff" stop-opacity=".02"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-20%" width="160%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#080611" flood-opacity=".35"/></filter>
+  </defs>
+  <ellipse cx="200" cy="386" rx="112" ry="15" fill="#060510" opacity=".28"/>
+  <g filter="url(#shadow)" transform="rotate(2 200 225)">
+    <path d="M108 116q0-14 15-14h154q15 0 15 14v221q0 15-15 15H123q-15 0-15-15z" fill="url(#pack)" stroke="#fff" stroke-opacity=".3" stroke-width="3"/>
+    <path d="M124 119h29v205h-29z" fill="url(#shine)" opacity=".8"/>
+    <path d="M266 118h17v214h-17z" fill="#fff" opacity=".07"/>
+    <rect x="117" y="158" width="166" height="131" rx="12" fill="hsl(308 70% 29%)" opacity=".88" stroke="hsl(333 86% 79%)" stroke-opacity=".65" stroke-width="2"/>
+    <text x="200" y="175" text-anchor="middle" class="brand">TARA DAILY</text>
+    <text x="200" y="210" text-anchor="middle" class="name">Matchbox Pack</text>
+    <circle cx="200" cy="275" r="32" fill="hsl(333 86% 79%)" opacity=".2"/><circle cx="200" cy="275" r="22" fill="none" stroke="hsl(333 86% 79%)" stroke-width="3" opacity=".8"/>
+    <text x="200" y="321" text-anchor="middle" class="category">HOUSEHOLD</text>
+    <path d="M128 342h144" stroke="hsl(333 86% 79%)" stroke-width="3" opacity=".7"/>
+    <text x="200" y="361" text-anchor="middle" class="detail">EVERYDAY FAVOURITE</text>
+  </g>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif}
+    .brand{fill:hsl(333 86% 79%);font-size:11px;font-weight:700;letter-spacing:3px}
+    .name{fill:#fff;font-size:20px;font-weight:700;letter-spacing:.1px}
+    .category{fill:hsl(333 86% 79%);font-size:10px;font-weight:700;letter-spacing:2px}
+    .detail{fill:#fff;fill-opacity:.75;font-size:8px;font-weight:600;letter-spacing:1.7px}
+  </style>
+</svg>
