@@ -7,9 +7,7 @@ import GoogleSignIn from "../components/GoogleSignIn";
 
 import { useAuth } from "../context/authContextValue";
 import {
-    isStrongPassword,
     isValidEmail,
-    isValidIndianPhone,
 } from "../services/validation";
 
 function Login() {
@@ -28,7 +26,6 @@ function Login() {
     const [formData, setFormData] =
         useState({
             email: "",
-            phone: "",
             password: "",
         });
 
@@ -74,23 +71,13 @@ function Login() {
 
         // Validation
 
-        if (!formData.email || !formData.phone || !formData.password) {
-            setError("Please enter your email, mobile number, and password.");
+        if (!formData.email.trim() || !formData.password) {
+            setError("Please enter your email and password.");
             return;
         }
 
         if (!isValidEmail(formData.email)) {
             setError("Please enter a valid email address.");
-            return;
-        }
-
-        if (!isValidIndianPhone(formData.phone)) {
-            setError("Please enter a valid 10-digit Indian phone number.");
-            return;
-        }
-
-        if (!isStrongPassword(formData.password)) {
-            setError("Password must be at least 8 characters and include uppercase and lowercase letters, a number, and a symbol.");
             return;
         }
 
@@ -100,8 +87,10 @@ function Login() {
 
             // API Call
 
-            const data =
-                await loginUser(formData);
+            const data = await loginUser({
+                email: formData.email.trim(),
+                password: formData.password,
+            });
 
             // Save User Using Context
 
@@ -175,19 +164,6 @@ function Login() {
                         value={formData.email}
                         onChange={handleChange}
                         autoComplete="email"
-                        required
-                    />
-
-                    <input
-                        type="tel"
-                        name="phone"
-                        placeholder="10-digit mobile number"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        inputMode="numeric"
-                        maxLength={10}
-                        pattern="[6-9][0-9]{9}"
-                        autoComplete="tel"
                         required
                     />
 

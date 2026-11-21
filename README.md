@@ -27,7 +27,8 @@ To upsert the same catalog and image paths into MongoDB, run `npm run seed:produ
 
 ## Main flows
 
-- Register with a unique email and 10-digit Indian mobile number. Passwords must be at least 8 characters and contain uppercase and lowercase letters, a number, and a symbol. Sign-in requires the registered mobile number; existing accounts without one can add it on their first sign-in.
+- Register with a unique email and 10-digit Indian mobile number. New passwords must be at least 8 characters and contain uppercase and lowercase letters, a number, and a symbol. Login requires only email and a non-empty password for compatibility with existing accounts.
+- Logged-in customers can add or update their phone number from My Account. Password changes require the current password and use the same strong-password rules as registration.
 - Sign in or create an account with Google after configuring the OAuth client ID.
 - Browse/search products by category and maintain a cart in the browser. The floating Tara Shopping Assistant matches shopping lists to catalog items, suggests budget-aware occasion combos, recommends pairings, and can add individual items or a full list to the cart.
 - Logged-in customers can place orders with a 10-digit Indian mobile number and a 6-digit Indian PIN code; MongoDB stores order items, shipping details, totals, and status.

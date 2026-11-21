@@ -19,9 +19,7 @@ const userSchema =
 
             phone: {
                 type: String,
-                required: function () {
-                    return !this.googleId;
-                },
+                required: false,
                 match: /^[6-9]\d{9}$/,
             },
 

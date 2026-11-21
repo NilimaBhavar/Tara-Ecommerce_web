@@ -1402,6 +1402,122 @@ img {
   clip-path: inset(50%);
 }
 
+.account-page {
+  max-width: 1000px;
+  padding: 0 clamp(16px, 5vw, 72px) 72px;
+}
+
+.account-page .page-heading {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.account-profile-card {
+  display: grid;
+  gap: 18px;
+}
+
+.account-identity,
+.account-form {
+  padding: clamp(20px, 4vw, 30px);
+  border: 1px solid rgba(195, 182, 255, 0.16);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025));
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
+}
+
+.account-identity h2,
+.account-form h2 {
+  margin: 6px 0 8px;
+  color: #f6f3ff;
+}
+
+.account-identity > p:not(.page-eyebrow),
+.account-form-description,
+.account-password-hint {
+  color: #b6b0ce;
+  line-height: 1.6;
+}
+
+.account-admin-badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 11px;
+  border: 1px solid rgba(117, 240, 189, 0.24);
+  border-radius: 999px;
+  background: rgba(117, 240, 189, 0.09);
+  color: #75f0bd;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.account-form {
+  display: grid;
+  gap: 12px;
+}
+
+.account-form label {
+  color: #d8d2e8;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.account-form input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid rgba(195, 182, 255, 0.2);
+  border-radius: 10px;
+  outline: none;
+  background: rgba(18, 16, 38, 0.94);
+  color: #f6f3ff;
+}
+
+.account-form input:focus {
+  border-color: #9b7bff;
+  outline: 2px solid rgba(155, 123, 255, 0.18);
+}
+
+.account-form input::placeholder {
+  color: #928ba9;
+}
+
+.account-form button {
+  justify-self: start;
+  min-height: 44px;
+  margin-top: 4px;
+  padding: 11px 18px;
+  border: 1px solid rgba(117, 240, 189, 0.25);
+  border-radius: 10px;
+  background: linear-gradient(115deg, #7656df, #478f9c 72%, #42b889);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.account-form button:hover:not(:disabled) {
+  filter: brightness(1.13);
+  transform: translateY(-1px);
+}
+
+.account-form button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.account-success-message {
+  padding: 10px 12px;
+  border: 1px solid rgba(117, 240, 189, 0.22);
+  border-radius: 9px;
+  background: rgba(117, 240, 189, 0.08);
+  color: #9af4ce;
+}
+
+.account-password-hint {
+  font-size: 0.82rem;
+}
+
 @media (max-width: 520px) {
   .assistant-panel {
     right: -4px;

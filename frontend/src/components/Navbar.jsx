@@ -79,6 +79,12 @@ function Navbar() {
                     </Link>
                 )}
 
+                {user && (
+                    <Link to="/account">
+                        My Account
+                    </Link>
+                )}
+
                 {/* ADMIN DASHBOARD */}
 
                 {user && user.isAdmin && (

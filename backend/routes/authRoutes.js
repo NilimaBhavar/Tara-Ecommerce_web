@@ -4,9 +4,12 @@ const express =
 const router =
     express.Router();
 
+const { protect } = require("../middleware/authMiddleware");
+
 const {
     registerUser,
     loginUser,
+    updateProfile,
     googleLoginUser,
 } = require(
     "../controllers/authcontroller"
@@ -29,6 +32,12 @@ router.post(
 router.post(
     "/google",
     googleLoginUser
+);
+
+router.put(
+    "/profile",
+    protect,
+    updateProfile
 );
 
 module.exports = router;

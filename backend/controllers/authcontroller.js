@@ -147,29 +147,21 @@ const loginUser = async (
 
     try {
 
-        const {
-            email,
-            phone,
-            password,
-        } = req.body || {};
+        const { email, password } = req.body || {};
 
         if (
             typeof email !== "string" ||
-            typeof phone !== "string" ||
-            typeof password !== "string"
+            typeof password !== "string" ||
+            !password
         ) {
             return res.status(400).json({
-                message: "Email, phone number, and password are required",
+                message: "Email and password are required",
             });
         }
 
-        if (
-            !isValidEmail(email.trim()) ||
-            !isValidIndianPhone(phone) ||
-            !isStrongPassword(password)
-        ) {
+        if (!isValidEmail(email.trim())) {
             return res.status(400).json({
-                message: "Enter a valid email, 10-digit Indian phone number, and a password of at least 8 characters with uppercase and lowercase letters, a number, and a symbol.",
+                message: "Enter a valid email address",
             });
         }
 
@@ -183,21 +175,8 @@ const loginUser = async (
         if (
             user &&
             user.password &&
-            await bcrypt.compare(password, user.password) &&
-            (!user.phone || user.phone === phone)
+            await bcrypt.compare(password, user.password)
         ) {
-            if (!user.phone) {
-                const phoneInUse = await User.findOne({ phone });
-                if (phoneInUse) {
-                    return res.status(401).json({
-                        message: "Invalid email, phone number, or password",
-                    });
-                }
-
-                user.phone = phone;
-                await user.save();
-            }
-
             res.json({
 
                 _id: user._id,
@@ -227,6 +206,117 @@ const loginUser = async (
 
         res.status(500).json({
             message: error.message,
+        });
+    }
+};
+
+const updateProfile = async (req, res) => {
+    const body = req.body || {};
+    const allowedFields = new Set(["phone", "currentPassword", "newPassword"]);
+    const unexpectedFields = Object.keys(body).filter(
+        (field) => !allowedFields.has(field)
+    );
+
+    if (unexpectedFields.length > 0) {
+        return res.status(400).json({
+            message: "Only phone and password profile fields can be updated",
+        });
+    }
+
+    const updatesPhone = Object.hasOwn(body, "phone");
+    const updatesPassword =
+        Object.hasOwn(body, "currentPassword") ||
+        Object.hasOwn(body, "newPassword");
+
+    if (!updatesPhone && !updatesPassword) {
+        return res.status(400).json({
+            message: "Provide a phone number or password update",
+        });
+    }
+
+    if (updatesPhone && !isValidIndianPhone(body.phone)) {
+        return res.status(400).json({
+            message: "Please enter a valid 10-digit Indian phone number",
+        });
+    }
+
+    if (updatesPassword) {
+        if (
+            typeof body.currentPassword !== "string" ||
+            !body.currentPassword ||
+            typeof body.newPassword !== "string" ||
+            !isStrongPassword(body.newPassword)
+        ) {
+            return res.status(400).json({
+                message: "Enter your current password and a new password of at least 8 characters with uppercase and lowercase letters, a number, and a symbol.",
+            });
+        }
+    }
+
+    try {
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({
+                message: "User account was not found",
+            });
+        }
+
+        if (updatesPhone) {
+            const phoneInUse = await User.findOne({
+                phone: body.phone,
+                _id: { $ne: user._id },
+            });
+
+            if (phoneInUse) {
+                return res.status(409).json({
+                    message: "An account with this phone number already exists",
+                });
+            }
+
+            user.phone = body.phone;
+        }
+
+        if (updatesPassword) {
+            if (!user.password) {
+                return res.status(400).json({
+                    message: "This account does not have a password to verify",
+                });
+            }
+
+            const currentPasswordMatches = await bcrypt.compare(
+                body.currentPassword,
+                user.password
+            );
+            if (!currentPasswordMatches) {
+                return res.status(401).json({
+                    message: "Current password is incorrect",
+                });
+            }
+
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(body.newPassword, salt);
+        }
+
+        await user.save();
+
+        return res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone || "",
+            avatar: user.avatar || "",
+            isAdmin: user.isAdmin,
+        });
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(409).json({
+                message: "An account with this phone number already exists",
+            });
+        }
+
+        console.error("Profile update failed:", error);
+        return res.status(500).json({
+            message: "Could not update your profile",
         });
     }
 };
@@ -331,5 +421,6 @@ const googleLoginUser = async (req, res) => {
 module.exports = {
     registerUser,
     loginUser,
+    updateProfile,
     googleLoginUser,
 };
